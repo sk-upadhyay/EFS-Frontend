@@ -24,7 +24,7 @@ function App() {
         <main className="flex-grow container mx-auto p-4">
           <Routes>
             {/* Home Route */}
-            <Route path="/" element={isAuthenticated ? <Home /> : <Navigate to="/login" replace />} />
+            <Route path="/" element={ <Home />} />
 
             {/* Auth Routes */}
             <Route path="/login" element={<Login />} />
