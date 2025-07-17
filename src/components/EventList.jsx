@@ -18,7 +18,7 @@ const EventList = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const data = await authFetch('http://localhost:8080/api/events');
+        const data = await authFetch('https://efs-backend-production.up.railway.app/api/events');
         setEvents(data);
       } catch (err) {
         setError(err.message || 'Failed to load events');
@@ -49,7 +49,7 @@ const EventList = () => {
     if (!window.confirm('Are you sure you want to delete this event?')) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/api/events/${id}`, {
+      const response = await fetch(`https://efs-backend-production.up.railway.app/api/events/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${sessionStorage.getItem('token')}`

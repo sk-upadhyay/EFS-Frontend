@@ -15,7 +15,7 @@ const UserList = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const data = await authFetch('http://localhost:8080/api/users');
+      const data = await authFetch('https://efs-backend-production.up.railway.app/api/users');
       setUsers(data);
       setFilteredUsers(data);
     } catch (error) {
@@ -45,7 +45,7 @@ const UserList = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        const response = await fetch(`http://localhost:8080/api/users/${id}`, {
+        const response = await fetch(`https://efs-backend-production.up.railway.app/api/users/${id}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${sessionStorage.getItem('token')}`

@@ -17,13 +17,13 @@ const FeedbackList = () => {
 
   const fetchFeedbacks = async () => {
     setLoading(true);
-    let url = 'http://localhost:8080/api/feedbacks';
+    let url = 'https://efs-backend-production.up.railway.app/api/feedbacks';
 
     if (searchUserId) {
-      url = `http://localhost:8080/api/feedbacks/by-user/${searchUserId}`;
+      url = `https://efs-backend-production.up.railway.app/api/feedbacks/by-user/${searchUserId}`;
     } else {
       // Remove eventId search, only search by userId
-      url = `http://localhost:8080/api/feedbacks/by-user/${searchUserId}`;
+      url = `https://efs-backend-production.up.railway.app/api/feedbacks/by-user/${searchUserId}`;
     }
 
     try {
@@ -58,7 +58,7 @@ const FeedbackList = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this feedback?')) {
       try {
-        await authFetch(`http://localhost:8080/api/feedbacks/${id}`, {
+        await authFetch(`https://efs-backend-production.up.railway.app/api/feedbacks/${id}`, {
           method: 'DELETE',
         });
         setFeedbacks(feedbacks.filter(feedback => feedback.id !== id));

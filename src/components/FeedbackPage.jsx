@@ -27,7 +27,7 @@ const FeedbackPage = () => {
     const fetchEvent = async () => {
       try {
         const data = await authFetch(
-          `http://localhost:8080/api/events/${eventId}`
+          `https://efs-backend-production.up.railway.app/api/events/${eventId}`
         );
         setEvent(data);
       } catch (error) {
@@ -55,7 +55,7 @@ const FeedbackPage = () => {
         user: { id: parseInt(userId) },
       };
 
-      await authFetch("http://localhost:8080/api/feedbacks", {
+      await authFetch("https://efs-backend-production.up.railway.app/api/feedbacks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -66,7 +66,7 @@ const FeedbackPage = () => {
       setSelectedRating(1); // reset to Neutral
 
       const updated = await authFetch(
-        `http://localhost:8080/api/events/${eventId}`
+        `https://efs-backend-production.up.railway.app/api/events/${eventId}`
       );
       setEvent(updated);
     } catch (err) {

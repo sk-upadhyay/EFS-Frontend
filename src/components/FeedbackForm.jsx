@@ -47,7 +47,7 @@ const FeedbackForm = () => {
     }
 
       try {
-        const response = await authFetch('http://localhost:8080/api/feedbacks', {
+        const response = await authFetch('https://efs-backend-production.up.railway.app/api/feedbacks', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -19,7 +19,7 @@ const EventForm = () => {
   useEffect(() => {
     if (isEditing) {
       setLoading(true);
-      authFetch(`http://localhost:8080/api/events/${id}`)
+      authFetch(`https://efs-backend-production.up.railway.app/api/events/${id}`)
         .then(data => {
           setEvent(data);
           setLoading(false);
@@ -46,7 +46,7 @@ const EventForm = () => {
     setError(null);
 
     const method = isEditing ? 'PUT' : 'POST';
-    const url = isEditing ? `http://localhost:8080/api/events/${id}` : 'http://localhost:8080/api/events';
+    const url = isEditing ? `https://efs-backend-production.up.railway.app/api/events/${id}` : 'https://efs-backend-production.up.railway.app/api/events';
 
     try {
       await authFetch(url, {
