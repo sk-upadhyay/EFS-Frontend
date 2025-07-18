@@ -3,118 +3,120 @@ import styled from 'styled-components';
 
 const EventCard = ({ event, isAdmin, onEdit, onDelete, onClick }) => {
   const { title, date, description } = event || {};
+  const eventDate = new Date(date);
+
   return (
     <StyledWrapper onClick={onClick}>
       <div className="card">
         <div className="content">
-          <div className="date">{date}</div>
+          <div className="date">{eventDate.toDateString()}</div>
           <div className="title">{title}</div>
           <div className="description">{description}</div>
         </div>
-        <div className='flex justify-between gap-2.5'>
-        {isAdmin && (new Date(date)>new Date) && (
+
+        {isAdmin && (
           <div className="actions">
-            <button className="edit-btn" onClick={(e) => { e.stopPropagation(); onEdit && onEdit(e); }}>
-              Edit
-            </button>
-            </div>
-          )}
-          { isAdmin &&(
-            <div className="actions">
-            <button className="delete-btn" onClick={(e) => { e.stopPropagation(); onDelete && onDelete(e); }}>
+            {eventDate > new Date() && (
+              <button className="edit-btn" onClick={(e) => { e.stopPropagation(); onEdit?.(e); }}>
+                Edit
+              </button>
+            )}
+            <button className="delete-btn" onClick={(e) => { e.stopPropagation(); onDelete?.(e); }}>
               Delete
             </button>
           </div>
         )}
-        </div>
       </div>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .card {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    min-width: 260px;
-    min-height: 320px;
-    padding: 20px 1px;
-    margin: 10px 0;
-    text-align: center;
-    position: relative;
+    justify-content: space-between;
+    min-width: 280px;
+    min-height: 260px;
+    padding: 24px 20px;
+    margin: 12px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
-    box-shadow: 0 10px 15px -3px rgba(33,150,243,.4),0 4px 6px -4px rgba(33,150,243,.4);
-    border-radius: 10px;
-    background-color: #6B6ECC;
-    background: linear-gradient(45deg, #04051dea 0%, #2b566e 100%);
+
+    &:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+    }
   }
 
   .content {
-    padding: 20px;
+    flex: 1;
+    padding-bottom: 20px;
+    text-align: center;
   }
 
-  .content .title {
-    color: white;
-    font-weight: 800;
-    font-size: 30px;
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.42);
-  }
-
-  .content .description {
-    color: rgba(255, 255, 255, 0.6);
+  .title {
+    font-size: 28px;
+    font-weight: 700;
     margin-top: 10px;
-    font-size: 14px;
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
   }
 
-  .content .date {
-    font-weight: 800;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.64);
-    margin-top: 10px;
-    font-size: 25px;
-    letter-spacing: 1px;
+  .date {
+    font-size: 18px;
+    font-weight: 600;
+    color: #b0d9ff;
+    margin-bottom: 6px;
+  }
+
+  .description {
+    font-size: 15px;
+    margin-top: 12px;
+    color: rgba(255, 255, 255, 0.8);
   }
 
   .actions {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    width: 90%;
     justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+    flex-wrap: wrap;
   }
 
   button {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    border: none;
-    outline: none;
-    color: rgb(255 255 255);
-    text-transform: uppercase;
+    padding: 10px 20px;
+    font-size: 0.8rem;
     font-weight: 700;
-    font-size: 0.75rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    text-shadow: 0px 4px 18px #2c3442;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
   }
 
   .edit-btn {
-    background-color: rgb(33 150 243);
+    background-color: #2196f3;
   }
 
   .edit-btn:hover {
-    background-color: rgb(25 118 210);
+    background-color: #1976d2;
   }
 
   .delete-btn {
-    background-color: rgb(220 38 38);
+    background-color: #dc2626;
   }
 
   .delete-btn:hover {
-    background-color: rgb(185 28 28);
+    background-color: #b91c1c;
   }
 `;
 

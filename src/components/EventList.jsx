@@ -1,16 +1,15 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authFetch } from '../utils/api';
-import Loader from './Loader';;
+import Loader from './Loader';
 import EventCard from './EventCard';
-import { notifySuccess } from '../utils/toastify'
+import { notifySuccess } from '../utils/toastify';
 
 const EventList = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('upcoming'); // 'upcoming' | 'past'
+  const [activeTab, setActiveTab] = useState('past'); // 👈 default to past tab
 
   const navigate = useNavigate();
   const role = sessionStorage.getItem('role');
@@ -42,7 +41,7 @@ const EventList = () => {
       else past.push(event);
     });
 
-    return { upcoming, past };
+    return { past, upcoming };
   };
 
   const handleDelete = async (id) => {
@@ -73,8 +72,8 @@ const EventList = () => {
   if (loading) return <Loader />;
   if (error) return <div className="text-center text-red-600">Error: {error}</div>;
 
-  const { upcoming, past } = segregateEvents();
-  const filteredEvents = activeTab === 'upcoming' ? upcoming : past;
+  const { past, upcoming } = segregateEvents();
+  const filteredEvents = activeTab === 'past' ? past : upcoming;
 
   return (
     <div className="min-h-screen p-6">
@@ -87,9 +86,9 @@ const EventList = () => {
         )}
       </div>
 
-      {/* Tabs */}
+      {/* Tabs with Past Events first */}
       <div className="flex space-x-4 mb-6">
-        {['upcoming', 'past'].map(tab => (
+        {['past', 'upcoming'].map(tab => (
           <button
             key={tab}
             className={`px-4 py-2 rounded-t-lg font-semibold ${
@@ -97,12 +96,11 @@ const EventList = () => {
             }`}
             onClick={() => setActiveTab(tab)}
           >
-            {tab === 'upcoming' ? 'Upcoming Events' : 'Past Events'}
+            {tab === 'past' ? 'Past Events' : 'Upcoming Events'}
           </button>
         ))}
       </div>
 
-      {/* Event Cards */}
       {filteredEvents.length === 0 ? (
         <div className="text-center text-gray-600">
           No {activeTab} events found.{' '}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { authFetch } from '../utils/api';
 import { notifySuccess, notifyError } from '../utils/toastify';
+import Loader from './Loader';
+
 const UserDetails = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -68,7 +70,8 @@ const UserDetails = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatePayload)
       });
-      notifySuccess('User details updated successfully');
+      notifySuccess('User details updated');
+      setUser(prev => ({ ...prev, ...updatePayload }));
     } catch (err) {
       notifyError(err.message);
     } finally {
@@ -76,16 +79,41 @@ const UserDetails = () => {
     }
   };
 
-  if (loading) return <div>Loading user details...</div>;
-  if (error) return <div className="text-red-600">Error: {error}</div>;
-  if (!user) return <div>No user data found.</div>;
+  if (loading) return (
+    <div className="flex justify-center items-center min-h-screen">
+      <Loader />
+    </div>
+  );
+
+  if (error) return (
+    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+      <div className="text-center text-red-600 p-4 bg-red-50 rounded-lg">
+        Error: {error}
+      </div>
+    </div>
+  );
+
+  if (!user) return (
+    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md text-center">
+      No user data found.
+    </div>
+  );
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold mb-6 text-center">User Details</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="name" className="block mb-1 font-semibold">Name</label>
+    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <div className="text-center mb-8">
+        <div className="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span className="text-3xl font-bold text-indigo-600">
+            {user.name?.charAt(0).toUpperCase()}
+          </span>
+        </div>
+        <h2 className="text-2xl font-bold text-gray-800">User Profile</h2>
+        <p className="text-gray-500">Manage your account details</p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="space-y-2">
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
           <input
             type="text"
             id="name"
@@ -93,39 +121,58 @@ const UserDetails = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full border border-gray-300 rounded px-3 py-2"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="email" className="block mb-1 font-semibold">Email</label>
+
+        <div className="space-y-2">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
           <input
             type="email"
             id="email"
             name="email"
             value={formData.email}
             disabled
-            className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100 cursor-not-allowed"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
           />
         </div>
-        <div className="mb-6">
-          <label htmlFor="role" className="block mb-1 font-semibold">Role</label>
-          <input
-            type="text"
+
+        <div className="space-y-2">
+          <label htmlFor="role" className="block text-sm font-medium text-gray-700">Role</label>
+          <select
             id="role"
             name="role"
             value={formData.role}
             onChange={handleChange}
             required
-            className="w-full border border-gray-300 rounded px-3 py-2"
-          />
+            disabled
+            className="w-full px-4 py-2 border cursor-not-allowed border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-gray-100"
+          >
+            <option value="">Select Role</option>
+            <option value="ADMIN">Admin</option>
+            <option value="VIEWER">Viewer</option>
+          </select>
         </div>
-        <button
-          type="submit"
-          disabled={submitting}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-        >
-          {submitting ? 'Saving...' : 'Save Changes'}
-        </button>
+
+        <div className="pt-4">
+          <button
+            type="submit"
+            disabled={submitting}
+            className={`w-full py-3 px-4 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition flex items-center justify-center ${
+              submitting ? 'opacity-75 cursor-not-allowed' : ''
+            }`}
+          >
+            {submitting ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Saving...
+              </>
+            ) : 'Save Changes'}
+          </button>
+        </div>
       </form>
     </div>
   );

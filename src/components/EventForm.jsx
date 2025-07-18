@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { authFetch } from '../utils/api';
 import Loader from './Loader';
+import { notifySuccess } from '../utils/toastify';
 
 const EventForm = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const EventForm = () => {
 
   const [event, setEvent] = useState({
     title: '',
-    date: '', // Format 'YYYY-MM-DD'
+    date: '', 
     description: ''
   });
   const [error, setError] = useState(null);
@@ -57,7 +58,7 @@ const EventForm = () => {
         body: JSON.stringify(event),
       });
 
-      alert(`Event ${isEditing ? 'updated' : 'created'} successfully!`);
+      notifySuccess(`Event ${isEditing ? 'updated' : 'created'} successfully!`);
       navigate('/events');
     } catch (error) {
       setError(error.message);
