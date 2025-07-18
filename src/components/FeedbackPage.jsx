@@ -50,7 +50,7 @@ const FeedbackPage = () => {
     const fetchEvent = async () => {
       try {
         const data = await authFetch(
-          `https://efs-backend-production.up.railway.app/api/events/${eventId}`
+          `https://abundant-prosperity-production.up.railway.app/api/events/${eventId}`
         );
         setEvent(data);
       } catch (error) {
@@ -78,7 +78,7 @@ const FeedbackPage = () => {
         user: { id: parseInt(userId) },
       };
 
-      await authFetch("https://efs-backend-production.up.railway.app/api/feedbacks", {
+      await authFetch("https://abundant-prosperity-production.up.railway.app/api/feedbacks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -89,7 +89,7 @@ const FeedbackPage = () => {
       setSelectedRating(1); // reset to Neutral
 
       const updated = await authFetch(
-        `https://efs-backend-production.up.railway.app/api/events/${eventId}`
+        `https://abundant-prosperity-production.up.railway.app/api/events/${eventId}`
       );
       setEvent(updated);
     } catch (err) {

@@ -26,7 +26,7 @@ const UserForm = () => {
     setError('');
 
     try {
-      const response = await authFetch('https://efs-backend-production.up.railway.app/api/users', {
+      const response = await authFetch('https://abundant-prosperity-production.up.railway.app/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),

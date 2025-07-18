@@ -34,7 +34,7 @@ const Signup = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('https://efs-backend-production.up.railway.app/api/auth/signup', {
+      const response = await fetch('https://abundant-prosperity-production.up.railway.app/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

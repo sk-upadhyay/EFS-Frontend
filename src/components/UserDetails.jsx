@@ -25,7 +25,7 @@ const UserDetails = () => {
           setLoading(false);
           return;
         }
-        const data = await authFetch(`https://efs-backend-production.up.railway.app/api/users/${userId}`);
+        const data = await authFetch(`https://abundant-prosperity-production.up.railway.app/api/users/${userId}`);
         setUser(data);
         setFormData({
           name: data.name || '',
@@ -65,7 +65,7 @@ const UserDetails = () => {
         email: formData.email,
         role: formData.role
       };
-      const response = await authFetch(`https://efs-backend-production.up.railway.app/api/users/${userId}`, {
+      const response = await authFetch(`https://abundant-prosperity-production.up.railway.app/api/users/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatePayload)

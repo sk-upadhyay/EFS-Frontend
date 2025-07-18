@@ -24,12 +24,12 @@ const FeedbackList = () => {
     setError(null);
     
     try {
-      let url = 'https://efs-backend-production.up.railway.app/api/feedbacks';
+      let url = 'https://abundant-prosperity-production.up.railway.app/api/feedbacks';
       
       if (initialUserId) {
-        url = `https://efs-backend-production.up.railway.app/api/feedbacks/by-user/${initialUserId}`;
+        url = `https://abundant-prosperity-production.up.railway.app/api/feedbacks/by-user/${initialUserId}`;
       } else if (eventId) {
-        url = `https://efs-backend-production.up.railway.app/api/feedbacks/by-event/${eventId}`;
+        url = `https://abundant-prosperity-production.up.railway.app/api/feedbacks/by-event/${eventId}`;
       }
 
       const data = await authFetch(url);
@@ -83,7 +83,7 @@ const FeedbackList = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this feedback?')) {
       try {
-        await authFetch(`https://efs-backend-production.up.railway.app/api/feedbacks/${id}`, {
+        await authFetch(`https://abundant-prosperity-production.up.railway.app/api/feedbacks/${id}`, {
           method: 'DELETE',
         });
         const updatedFeedbacks = feedbacks.filter(feedback => feedback.id !== id);

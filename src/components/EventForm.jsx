@@ -20,7 +20,7 @@ const EventForm = () => {
   useEffect(() => {
     if (isEditing) {
       setLoading(true);
-      authFetch(`https://efs-backend-production.up.railway.app/api/events/${id}`)
+      authFetch(`https://abundant-prosperity-production.up.railway.app/api/events/${id}`)
         .then(data => {
           setEvent(data);
           setLoading(false);
@@ -47,7 +47,7 @@ const EventForm = () => {
     setError(null);
 
     const method = isEditing ? 'PUT' : 'POST';
-    const url = isEditing ? `https://efs-backend-production.up.railway.app/api/events/${id}` : 'https://efs-backend-production.up.railway.app/api/events';
+    const url = isEditing ? `https://abundant-prosperity-production.up.railway.app/api/events/${id}` : 'https://abundant-prosperity-production.up.railway.app/api/events';
 
     try {
       await authFetch(url, {
