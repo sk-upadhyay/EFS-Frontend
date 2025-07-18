@@ -173,7 +173,7 @@ const Navbar = () => {
               to="/" 
               className={`text-xl font-bold transition-colors ${scrolled ? 'text-blue-600 hover:text-blue-800' : 'text-white hover:text-blue-200'}`}
             >
-              EFS Dashboard
+              <img src="./EFS.png" alt="EFS" className="h-20 "/>
             </Link>
           </div>
 
